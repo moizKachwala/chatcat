@@ -1,2 +1,2 @@
 # chatcat
-Multi-user chat application1
+Multi-user chat application in NodeJS
