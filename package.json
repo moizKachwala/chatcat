@@ -1,0 +1,34 @@
+{
+  "name": "chatcat",
+  "version": "0.0.1",
+  "description": "multi user chat application in nodejs",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moizKachwala/chatcat.git"
+  },
+  "keywords": [
+    "Chat",
+    "Application",
+    "NodeJS",
+    "Express",
+    "MongoDB",
+    "Mongoose"
+  ],
+  "author": "Moiz Kachwala",
+  "license": "ISC",
+  "engines": {
+    "node": "4.2.2"
+  },
+  "bugs": {
+    "url": "https://github.com/moizKachwala/chatcat/issues"
+  },
+  "homepage": "https://github.com/moizKachwala/chatcat#readme",
+  "dependencies": {
+    "ejs": "^2.5.1",
+    "express": "^4.14.0"
+  }
+}
