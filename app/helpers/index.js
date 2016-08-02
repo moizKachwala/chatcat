@@ -1,6 +1,7 @@
 'use strict';
 
 const router = require('express').Router();
+const db = require('../db');
 
 //iterater through the routes object and mount the routes.
 let _registerRoutes = (routes, method) => {
@@ -24,6 +25,48 @@ let route = routes => {
     return router;
 }
 
+//find a single user based on key
+let findOne = profileID => {
+    return db.userModel.findOne({
+        'profileId': profileID
+    });
+}
+
+//create new user and return that instance 
+let createNewUser = profile => {
+    return new Promise((resolve, reject) => {
+        let newChatUser = db.userModel({
+            profileId: profile.id,
+            fullName: profile.fullName,
+            profilePic: profile.photos[0].value || ''
+        });
+
+        newChatUser.save(error => {
+            if(error){
+                reject(error);
+            }else{
+                resolve(newChatUser);
+            }
+        });
+    });
+}
+
+// The ES6 promisified version of findById
+let findById = id => {
+    return new Promise((resolve, reject) => {
+        db.userModel.findById(id, (error, user) => {
+            if(error){
+                reject(error);
+            }else{
+                resolve(user);
+            }
+        });
+    });
+}
+
 module.exports = {
-    route
+    route,
+    findOne,
+    createNewUser,
+    findById
 }
