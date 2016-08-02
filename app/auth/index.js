@@ -1,8 +1,10 @@
 'use strict';
 const passport = require('passport');
 const config = require('../config');
-const FacebookStrategy = require('passport-facebook').Strategy;
 const helper = require('../helpers');
+
+const FacebookStrategy = require('passport-facebook').Strategy;
+const TwitterStrategy = require('passport-twitter').Strategy;
 
 module.exports = () => {
     passport.serializeUser((user, done) => {
@@ -33,4 +35,5 @@ module.exports = () => {
         });
     }
     passport.use(new FacebookStrategy(config.fb, authProcessor));
+    passport.use(new TwitterStrategy(config.twitter, authProcessor));
 }

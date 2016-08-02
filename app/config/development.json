@@ -1,11 +1,17 @@
 {
     "host": "http://localhost:3000",
-    "dbURI": "mongodb://chatcat:catscanfly@ds033015.mlab.com:33015/mchatcat",
+    "dbURI": "mongodb://chatcat:catcanfly@ds033015.mlab.com:33015/mchatcat",
     "sessionSecret": "catcanfly",
     "fb":{
         "clientID": "",
         "clientSecret": "",
         "callbackURL": "//localhost:3000/auth/facebook/callback",
+        "profileFields": ["id", "displayName", "photos"]
+    },
+    "twitter":{
+        "consumerKey": "",
+        "consumerSecret": "",
+        "callbackURL": "//localhost:3000/auth/twitter/callback",
         "profileFields": ["id", "displayName", "photos"]
     }
 }
