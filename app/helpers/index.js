@@ -37,7 +37,7 @@ let createNewUser = profile => {
     return new Promise((resolve, reject) => {
         let newChatUser = db.userModel({
             profileId: profile.id,
-            fullName: profile.fullName,
+            fullName: profile.displayName,
             profilePic: profile.photos[0].value || ''
         });
 
