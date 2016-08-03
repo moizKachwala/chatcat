@@ -64,9 +64,20 @@ let findById = id => {
     });
 }
 
+// A middleware that checks to see if the user is authenticated & logged in
+let isAuthenticated = (req, res, next) => {
+    if(req.isAuthenticated()){
+        next();
+    }else{
+        res.redirect('/');
+    }
+}
+
+
 module.exports = {
     route,
     findOne,
     createNewUser,
-    findById
+    findById,
+    isAuthenticated
 }

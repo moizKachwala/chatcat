@@ -9,14 +9,16 @@ module.exports = () => {
             '/': (req, res, next) => {
                 res.render('login');
             },
-            '/rooms': (req, res, next) => {
+            '/rooms': [h.isAuthenticated, (req, res, next) => {
                 res.render('rooms', {
                     user: req.user
                 });
-            },
-            '/chat': (req, res, next) => {
-                res.render('chatroom');
-            },
+            }],
+            '/chat': [h.isAuthenticated, (req, res, next) => {
+                res.render('chatroom',{
+                    user: req.user
+                });
+            }],
             '/auth/facebook': passport.authenticate('facebook'),
             '/auth/facebook/callback': passport.authenticate('facebook', {
                 successRedirect: '/rooms',
