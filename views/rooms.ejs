@@ -8,9 +8,32 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 		$(() => {
-			let socket = io('http://localhost:3000/roomslist');
+			let socket = io('<%= host %>' + '/roomslist');
+			let newRoomInput = $("input[name='roomName']");
 
-			socket.on('connect', () => console.log('connected to server'));
+			let renderChatRooms = chatrooms => {
+				let roomsListDiv = $('#roomsListUL');
+				let listStr = '';
+				for(let cat of chatrooms){
+					listStr += `<a href="/chat/${cat.roomID}"><li>${cat.room}</li></a>`
+				}
+				roomsListDiv.html('').append(listStr);
+			}
+
+			//get the list of chatrooms
+			socket.emit('getChatrooms');
+			
+			//Event Listener for chatrooms
+			socket.on('chatRoomsList', chatrooms => {
+				renderChatRooms(JSON.parse(chatrooms));
+			});
+
+			$('#createBtn').on('click', () => {
+				if(newRoomInput.val() !== ''){
+					socket.emit('createNewRoom', newRoomInput.val());
+					newRoomInput.val('');
+				}
+			});
 		});
 	</script>
 </head>
@@ -30,10 +53,6 @@
 		</div>
 		<div class="roomsListDiv">
 			<ul class="roomsList" id="roomsListUL">
-			<!-- Loop list items here -->
-				<a href="chatroom.htm"><li>World Cuisine</li></a>
-				<a href="chatroom.htm"><li>Coffee and Conversations</li></a>
-			<!-- Loop ends -->
 			</ul>
 		</div>
 	</div>

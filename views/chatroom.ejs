@@ -2,19 +2,57 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>ChatCat - Topic Goes Here</title>
+	<title>ChatCat - <%= room %></title>
 	<link rel="stylesheet" href="/css/chatroomStyles.css">
 	<script src="/js/jquery-2.1.4.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		$(() => {
+			let socket = io('<%= host %>' + '/chatter');
+			let roomID = '<%= roomID %>';
+			let user = '<%= user.fullName %>';
+			let userPic = '<%= user.profilePic %>';
+			let chatUsers = $('.chatUsers');
+
+			socket.on('connect', () => {
+				socket.emit('joinRoom', {
+					roomID,
+					user,
+					userPic
+				});
+			});
+
+			let userList = user => {
+				return 	`<div class="userBlock">
+						<div class="userPic"><img src="${user.userPic}" alt="${user.user}"></div>
+						<div class="cuserName">${user.user}</div>
+						</div>`;
+			}
+
+			socket.on('updateUserList', data => {
+				let parsedData = JSON.parse(data);
+				let usersListData = '';
+				for(let user of parsedData){
+					usersListData += userList(user);
+				}
+
+				chatUsers.html('').html(usersListData);
+
+			});
+
+
+		});
+	</script>
 </head>
 <body>
 	<div class="container">
 		<div class="titlePanel">
-			<h1>ChatCAT | Topic Goes Here</h1>
+			<h1>ChatCAT | <%= room %></h1>
 		</div>
 		<div class="controls">
 			<div class="userPicHolder"><img src="<%= user.profilePic %>" alt="<%= user.fullName %>"></div>
 			<p class="userName"><%= user.fullName %></p>
-			<a href="rooms.htm" id="roomsBtn">Rooms</a>
+			<a href="/rooms" id="roomsBtn">Rooms</a>
 			<a href="login.htm" id="logOutBtn">Logout</a>
 		</div>
 		<div class="chatListDiv">
