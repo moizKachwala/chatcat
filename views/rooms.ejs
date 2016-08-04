@@ -5,6 +5,14 @@
 	<title>ChatCat - Rooms</title>
 	<link rel="stylesheet" href="/css/roomsStyles.css">
 	<script src="/js/jquery-2.1.4.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		$(() => {
+			let socket = io('http://localhost:3000/roomslist');
+
+			socket.on('connect', () => console.log('connected to server'));
+		});
+	</script>
 </head>
 <body>
 	<div class="container">
