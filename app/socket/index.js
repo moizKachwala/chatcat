@@ -5,7 +5,7 @@ module.exports = (io, app) => {
     let allrooms = app.locals.chatrooms;
 
     io.of('/roomslist').on('connection', socket => {
-        
+
         socket.on('getChatrooms', () => {
             socket.emit('chatRoomsList', JSON.stringify(allrooms));
         });
@@ -14,7 +14,7 @@ module.exports = (io, app) => {
             // check to see if a room with the same title exist or not
             // if not, create one and broadcast it to everyone.
 
-            if(!helper.findRoomByName(allrooms, newRoomInput)){
+            if (!helper.findRoomByName(allrooms, newRoomInput)) {
                 allrooms.push({
                     room: newRoomInput,
                     roomID: helper.randomHex(),
@@ -42,5 +42,11 @@ module.exports = (io, app) => {
             socket.emit('updateUserList', JSON.stringify(usersList.users));
         });
 
+        //when a socket exists
+        socket.on('disconnect', () => {
+            //Find the room, to which the socket is connected to and purge the user.
+            let room = helper.removeUserFromRoom(allrooms, socket);
+            socket.broadcast.to(room.roomID).emit('updateUserList', JSON.stringify(room.users));
+        });
     });
 }
