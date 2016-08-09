@@ -3,8 +3,8 @@
 if (process.env.NODE_ENV === 'production') {
     // offer production stage
     // process.env.REDIS_URL
-    let redisURI = require('uri').parse(process.env.REDIS_URL);
-    let redisPassword = redisURI.auth.split(':')[1];
+    //let redisURI = require('uri').parse(process.env.REDIS_URL);
+   // let redisPassword = redisURI.auth.split(':')[1];
 
     module.exports = {
         host: process.env.host || "",
@@ -21,12 +21,12 @@ if (process.env.NODE_ENV === 'production') {
             consumerSecret: process.env.twConsumerSecret,
             callbackURL: process.env.host + '/auth/twitter/callback',
             profileFields: ['id', 'displayName', 'photos']
-        },
-        redis: {
-            host: redisURI.hostname,
-            port: redisURI.port,
-            password: redisPassword
         }
+        // redis: {
+        //     host: redisURI.hostname,
+        //     port: redisURI.port,
+        //     password: redisPassword
+        // }
     }
 } else {
     module.exports = require('./development.json');
