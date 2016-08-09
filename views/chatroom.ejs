@@ -8,11 +8,15 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 		$(() => {
-			let socket = io('<%= host %>' + '/chatter');
+			let socket = io('<%= host %>' + '/chatter', {
+				transports: ['websocket']
+			});
 			let roomID = '<%= roomID %>';
 			let user = '<%= user.fullName %>';
 			let userPic = '<%= user.profilePic %>';
 			let chatUsers = $('.chatUsers');
+			let chatInput = $("input[name='userInput']");
+			let chatMessageDiv = $('.chatMessages');
 
 			socket.on('connect', () => {
 				socket.emit('joinRoom', {
@@ -40,6 +44,36 @@
 
 			});
 
+			let updateFeed = (userPic, message) => {
+				let template = `<div class="chatBlock">
+						<div class="userPic"><img src="${userPic}"></div>
+						<div class="chatMsg">${message}</div>
+					</div>`;
+
+				$(template).hide().prependTo(chatMessageDiv).slideDown(200);
+			}
+
+			chatInput.on('keyup', function(event) {
+				event.preventDefault();
+				let messageFld = $(this);
+				if(event.which === 13 && messageFld.val() !== ''){
+					socket.emit('newMessage', {
+						roomID,
+						user,
+						userPic,
+						message: messageFld.val()
+					});
+
+					//update the local feed.
+					updateFeed(userPic, messageFld.val());
+					messageFld.val('');
+				}
+			});
+
+			socket.on('inMessage', data => {
+				let parsedData = JSON.parse(data);
+				updateFeed(parsedData.userPic, parsedData.message);
+			});
 
 		});
 	</script>
@@ -59,10 +93,6 @@
 			<div class="chatMessagesPanel">
 				<div class="chatMessages">
 				<!-- Loop this for chat messages -->
-				<div class="chatBlock">
-					<div class="userPic"><img src="./img/user.jpg"></div>
-					<div class="chatMsg">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti perferendis eius aut nesciunt necessitatibus ad nulla, qui sequi, id nam. Possimus odit aut nisi veritatis amet distinctio id officiis ipsam!</div>
-				</div>					
 				<!-- loop end -->
 				</div>
 				<div class="typePanel">
@@ -72,10 +102,6 @@
 			</div>
 			<div class="chatUsers">
 			<!-- Loop this for chat users -->
-				<div class="userBlock">
-					<div class="userPic"><img src="./img/user.jpg" alt="John Doe"></div>
-					<div class="cuserName">John Doe</div>
-				</div>
 			<!-- loop end -->
 			</div>
 		</div>

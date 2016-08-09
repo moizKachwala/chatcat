@@ -8,7 +8,9 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 		$(() => {
-			let socket = io('<%= host %>' + '/roomslist');
+			let socket = io('<%= host %>' + '/roomslist', {
+				transports: ['websocket']
+			});
 			let newRoomInput = $("input[name='roomName']");
 
 			let renderChatRooms = chatrooms => {

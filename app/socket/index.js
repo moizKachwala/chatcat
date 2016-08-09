@@ -48,5 +48,11 @@ module.exports = (io, app) => {
             let room = helper.removeUserFromRoom(allrooms, socket);
             socket.broadcast.to(room.roomID).emit('updateUserList', JSON.stringify(room.users));
         });
+
+        //when a new message arrives.
+        socket.on('newMessage', data => {
+            socket.to(data.roomID).emit('inMessage', JSON.stringify(data));
+        });
+
     });
 }
