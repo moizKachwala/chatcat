@@ -8,9 +8,7 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 		$(() => {
-			let socket = io('<%= host %>' + '/chatter', {
-				transports: ['websocket']
-			});
+			let socket = io('<%= host %>' + '/chatter');
 			let roomID = '<%= roomID %>';
 			let user = '<%= user.fullName %>';
 			let userPic = '<%= user.profilePic %>';
