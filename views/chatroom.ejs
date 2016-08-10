@@ -31,7 +31,7 @@
 						</div>`;
 			}
 
-			socket.on('updateUserList', data => {
+			socket.on('updateUsersList', data => {
 				let parsedData = JSON.parse(data);
 				let usersListData = '';
 				for(let user of parsedData){
