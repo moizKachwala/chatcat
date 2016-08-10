@@ -1,22 +1,22 @@
 {
-    "host": "http://localhost:3000",
-    "dbURI": "mongodb://chatcat:catscanfly@ds033015.mlab.com:33015/mchatcat",
-    "sessionSecret": "catcanfly",
-    "fb":{
-        "clientID": "",
-        "clientSecret": "",
-        "callbackURL": "//localhost:3000/auth/facebook/callback",
-        "profileFields": ["id", "displayName", "photos"]
-    },
-    "twitter":{
-        "consumerKey": "",
-        "consumerSecret": "",
-        "callbackURL": "//localhost:3000/auth/twitter/callback",
-        "profileFields": ["id", "displayName", "photos"]
-    },
-    "redis": {
-        "host": "127.0.0.1",
-        "port": 6379,
-        "password": ""
-    }
+	"host": "http://localhost:3000",
+	"dbURI": "<your mongoLab.com database URI>",
+	"sessionSecret": "catscanfly",
+	"fb": {
+		"clientID": "<facebook app ID key>",
+		"clientSecret": "<facebook app secret key>",
+		"callbackURL": "//localhost:3000/auth/facebook/callback",
+		"profileFields": ["id", "displayName", "photos"]
+	},
+	"twitter": {
+		"consumerKey": "<twitter consumer key>",
+		"consumerSecret": "<twitter consumer secret key>",
+		"callbackURL": "//localhost:3000/auth/twitter/callback",
+		"profileFields": ["id", "displayName", "photos"]
+	},
+	"redis": {
+		"host": "127.0.0.1",
+		"port": 6379,
+		"password": ""
+	}
 }

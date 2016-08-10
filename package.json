@@ -1,5 +1,5 @@
 {
-  "name": "chatcat",
+  "name": "multi-user-chat",
   "version": "0.0.1",
   "description": "multi user chat application in nodejs",
   "scripts": {

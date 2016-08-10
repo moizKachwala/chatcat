@@ -17,7 +17,7 @@
 			let chatMessageDiv = $('.chatMessages');
 
 			socket.on('connect', () => {
-				socket.emit('joinRoom', {
+				socket.emit('join', {
 					roomID,
 					user,
 					userPic
